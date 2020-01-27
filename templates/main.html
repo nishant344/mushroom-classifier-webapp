@@ -12,58 +12,57 @@ form {
 }
 </style>
 <!-- <head>
-  <meta charset="UTF-8">
-  <title>Mushroom Classifier</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head> -->
 
 <body>
 <div>
 <form action="{{ url_for('predict') }}" method="POST">
     <fieldset>
-        <legend>Input values:</legend>
-        <p>Please select Odor of Mushroom</p>
+        <legend align="center"> <h1> Mushroom Classifier Tool </h1> </legend>
+        <p style="font-weight: bold;">Please select Odor of Mushroom</p>
 		<input type="radio" name="Odor" value="a"> Almond
 		<input type="radio" name="Odor" value="l"> Anise
 		<input type="radio" name="Odor" value="c"> Creosote
 		<input type="radio" name="Odor" value="y"> Fishy
 		<input type="radio" name="Odor" value="f"> Foul
 		<input type="radio" name="Odor" value="m"> Musty
-		<input type="radio" name="Odor" value="n"> None
 		<input type="radio" name="Odor" value="p"> Pungent
-		<input type="radio" name="Odor" value="s"> Spicy<br>
+		<input type="radio" name="Odor" value="s"> Spicy
+		<input type="radio" name="Odor" value="n"> None<br>
 		
-		<p>Does Mushroom have bruises?</p>
+		<p style="font-weight: bold;">Does Mushroom have bruises?</p>
 		<input type="radio" name="bruises" value="t"> Yes
 		<input type="radio" name="bruises" value="f"> No<br>
 		
-		<p>Gill Spacing Type</p>
+		<p style="font-weight: bold;">Gill Spacing Type</p>
 		<input type="radio" name="gill_spacing" value="c"> Close
 		<input type="radio" name="gill_spacing" value="w"> Crowded<br>
 		
-		<p>Gill Size</p>
+		<p style="font-weight: bold;">Gill Size</p>
 		<input type="radio" name="gill_size" value="b"> Broad
 		<input type="radio" name="gill_size" value="n"> Narrow<br>
 		
-        <p>Ring Type</p>
+        <p style="font-weight: bold;">Ring Type</p>
 		<input type="radio" name="ring_type" value="c"> Cobwebby
 		<input type="radio" name="ring_type" value="e"> Evanescent
 		<input type="radio" name="ring_type" value="f"> Flaring
 		<input type="radio" name="ring_type" value="l"> Large
-		<input type="radio" name="ring_type" value="n"> None
 		<input type="radio" name="ring_type" value="p"> Pendant
 		<input type="radio" name="ring_type" value="s"> Sheathing
-		<input type="radio" name="ring_type" value="z"> Zone<br>
+		<input type="radio" name="ring_type" value="z"> Zone
+		<input type="radio" name="ring_type" value="n"> None<br>
 
         <br>
         <input type="submit">
 		<br>
 		<br>
-		{{ features }}
+		<p style="font-size:35px" align="center">{{ features }}</p>
     </fieldset>
 </form>
 </div>
@@ -75,7 +74,7 @@ form {
             <b>{{ variable }}</b> : {{ value }}
         {% endfor %}
         <br>
-        <br> Mushroom Class is:
+        <br> 
            <p style="font-size:50px">{{ result }}</p>
     {% endif %}
 </div> -->
