@@ -1,6 +1,5 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
-#import pickle
 import pandas as pd
 from sklearn.externals import joblib
 import os
@@ -11,49 +10,48 @@ model = joblib.load("model/mushroom_model.pkl")
 
 @app.route('/')
 def home():
-    top_features_include = ['odor', 'bruises', 'gill-spacing', 'gill-size', 'ring-type','mushroom_class']
-    df_pred=pd.DataFrame(columns=top_features_include)
-    if not os.path.isfile(r'history.csv'):
-        df_pred.to_csv (r'history.csv', index = None, header=True)
-    else: # else it will load dataframe from history.csv and append data with current predictions and save it to csv again.
-        df_pred=pd.read_csv(r'history.csv')
-    return render_template('main.html', logs=df_pred.values)
+    headers = ['odor', 'bruises', 'gill-spacing', 'gill-size', 'ring-type','mushroom_class']
+    df_history=pd.DataFrame(columns=headers)
+    if not os.path.isfile(r'history.csv'): # create an empty history with header if it is not present
+        df_history.to_csv (r'history.csv', index=None, header=True)
+    else: # else load existing history
+        df_history=pd.read_csv(r'history.csv')
+    return render_template('main.html', logs=df_history.values)
     
 
 @app.route('/predict',methods=['POST'])
 def predict():
     if GB:
         try:
-            int_features = [str(x) for x in request.form.values()]
-            top_features_include = ['odor', 'bruises', 'gill-spacing', 'gill-size', 'ring-type']
-            
-            dict_use = dict(zip(top_features_include, int_features))
-            
-            query = pd.get_dummies(pd.DataFrame(dict_use,index=[0]))
-            query = query.reindex(columns=model_columns, fill_value=0)
+            # Build dataframe from user input
+            input_vals = [str(x) for x in request.form.values()]
+            features = ['odor', 'bruises', 'gill-spacing', 'gill-size', 'ring-type']
+            feature_vals = dict(zip(features, input_vals))
+            df_feature_vals = pd.get_dummies(pd.DataFrame(feature_vals,index=[0]))
+            df_feature_vals = df_feature_vals.reindex(columns=model_columns, fill_value=0)
 
-            prediction = GB.predict(query)
+            # Predict mushroom class
+            prediction = GB.predict(df_feature_vals)
             if prediction == 0:
-                class_mushroom = "Edible"
+                mushroom_class = "Edible"
             else:
-                class_mushroom = "Poisonous"
-                
-            output = 'Your Mushroom is : '+ class_mushroom
-            pred={'mushroom_class':class_mushroom}
-            history_dict={**dict_use,**pred}
-            
-            df_pred=pd.DataFrame(history_dict,index=[0])
-            
-            df1=pd.read_csv(r'history.csv')
-            df_pred = pd.concat([df_pred, df1]).reset_index(drop = True)
-            df_pred.to_csv (r'history.csv', index = None, header=True)
+                mushroom_class = "Poisonous"
+            pred = {'mushroom_class': mushroom_class}
 
+            # Store result in history
+            history_dict = {**feature_vals, **pred}
+            df_pred = pd.DataFrame(history_dict,index=[0])
+            df_history = pd.read_csv(r'history.csv')
+            df_pred = pd.concat([df_pred, df_history]).reset_index(drop=True)
+            df_pred.to_csv (r'history.csv', index=None, header=True)
+
+            # Render html with updated result and history
+            output = 'Your Mushroom is : '+ mushroom_class
             return render_template('main.html', features=output, logs=df_pred.values)
-
         except:
-            print("error encountered")
+            print("Error encountered during prediction")
     else:
-        print ('Train the model first')
+        print('No model present. Please train the model first')
         return ('No model here to use')
 
 if __name__ == '__main__':
@@ -63,8 +61,8 @@ if __name__ == '__main__':
         port = 12345 # If you don't provide any port the port will be set to 12345
 
 GB = joblib.load("model/mushroom_model.pkl") # Load "model.pkl"
-print ('Model loaded')
+print('Model loaded')
 model_columns = joblib.load("model/model_columns.pkl") # Load "model_columns.pkl"
-print ('Model columns loaded')
-
+print('Model columns loaded')
+print('Starting app at http://localhost:12345')
 app.run(port=port, debug=True)

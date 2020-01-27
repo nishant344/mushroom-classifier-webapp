@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <style>
-form {
+    form {
     margin: auto;
     width: 50%;
 }
@@ -11,85 +11,87 @@ form {
     border: 1px solid #ccc;
 }
 </style>
+
 <head>
-  <meta charset="utf-8">
-  <Title>Mushroom Classifier</Title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <meta charset="utf-8">
+    <Title>Mushroom Classifier</Title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </head>
 
 <body>
-<div>
-<form action="{{ url_for('predict') }}" method="POST">
-    <fieldset>
-        <legend align="center"> <h1> Mushroom Classifier Tool </h1> </legend>
-        <p style="font-weight: bold;">Please select Odor of Mushroom</p>
-		<input type="radio" name="Odor" value="a"> Almond
-		<input type="radio" name="Odor" value="l"> Anise
-		<input type="radio" name="Odor" value="c"> Creosote
-		<input type="radio" name="Odor" value="y"> Fishy
-		<input type="radio" name="Odor" value="f"> Foul
-		<input type="radio" name="Odor" value="m"> Musty
-		<input type="radio" name="Odor" value="p"> Pungent
-		<input type="radio" name="Odor" value="s"> Spicy
-		<input type="radio" name="Odor" value="n"> None<br>
-		
-		<p style="font-weight: bold;">Does Mushroom have bruises?</p>
-		<input type="radio" name="bruises" value="t"> Yes
-		<input type="radio" name="bruises" value="f"> No<br>
-		
-		<p style="font-weight: bold;">Gill Spacing Type</p>
-		<input type="radio" name="gill_spacing" value="c"> Close
-		<input type="radio" name="gill_spacing" value="w"> Crowded<br>
-		
-		<p style="font-weight: bold;">Gill Size</p>
-		<input type="radio" name="gill_size" value="b"> Broad
-		<input type="radio" name="gill_size" value="n"> Narrow<br>
-		
-        <p style="font-weight: bold;">Ring Type</p>
-		<input type="radio" name="ring_type" value="c"> Cobwebby
-		<input type="radio" name="ring_type" value="e"> Evanescent
-		<input type="radio" name="ring_type" value="f"> Flaring
-		<input type="radio" name="ring_type" value="l"> Large
-		<input type="radio" name="ring_type" value="p"> Pendant
-		<input type="radio" name="ring_type" value="s"> Sheathing
-		<input type="radio" name="ring_type" value="z"> Zone
-		<input type="radio" name="ring_type" value="n"> None<br>
+    <div>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <fieldset>
+                <legend align="center">
+                    <h1> Mushroom Classifier Tool </h1>
+                </legend>
+                <p style="font-weight: bold;">Please select Odor of Mushroom</p>
+                <input type="radio" name="Odor" value="a"> Almond
+                <input type="radio" name="Odor" value="l"> Anise
+                <input type="radio" name="Odor" value="c"> Creosote
+                <input type="radio" name="Odor" value="y"> Fishy
+                <input type="radio" name="Odor" value="f"> Foul
+                <input type="radio" name="Odor" value="m"> Musty
+                <input type="radio" name="Odor" value="p"> Pungent
+                <input type="radio" name="Odor" value="s"> Spicy
+                <input type="radio" name="Odor" value="n"> None<br>
+                <p style="font-weight: bold;">Does Mushroom have bruises?</p>
+                <input type="radio" name="bruises" value="t"> Yes
+                <input type="radio" name="bruises" value="f"> No<br>
+                <p style="font-weight: bold;">Gill Spacing Type</p>
+                <input type="radio" name="gill_spacing" value="c"> Close
+                <input type="radio" name="gill_spacing" value="w"> Crowded<br>
+                <p style="font-weight: bold;">Gill Size</p>
+                <input type="radio" name="gill_size" value="b"> Broad
+                <input type="radio" name="gill_size" value="n"> Narrow<br>
+                <p style="font-weight: bold;">Ring Type</p>
+                <input type="radio" name="ring_type" value="c"> Cobwebby
+                <input type="radio" name="ring_type" value="e"> Evanescent
+                <input type="radio" name="ring_type" value="f"> Flaring
+                <input type="radio" name="ring_type" value="l"> Large
+                <input type="radio" name="ring_type" value="p"> Pendant
+                <input type="radio" name="ring_type" value="s"> Sheathing
+                <input type="radio" name="ring_type" value="z"> Zone
+                <input type="radio" name="ring_type" value="n"> None<br>
+                <br>
+                <input type="submit">
+                <br>
+                <br>
+                <p style="font-size:35px" align="center">{{ features }}</p>
+                <br>
+                <br>
+            </fieldset>
+        </form>
+    </div>
+    <br>
+    <div id="history" align="center">
+        <legend align="center">
+            <h3> Classification History </h3>
+        </legend>
+        <table style="width:70%" border="1px">
+            <tr>
+                <th>Odor</th>
+                <th>Bruises</th>
+                <th>Gill Spacing</th>
+                <th>Gill Size</th>
+                <th>Ring Type</th>
+                <th>Mushroom Class</th>
+            </tr>
+            {% for row in logs %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
-        <br>
-        <input type="submit">
-		<br>
-		<br>
-		<p style="font-size:35px" align="center">{{ features }}</p>
-		<br>
-		<br>
-    </fieldset>
-</form>
-</div>
-<br>
-<div id = "history" align="center">
-<legend align="center"> <h3> Classification History </h3> </legend>
-<table style="width:70%" border="1px">
-  <tr>
-    <th>Odor</th>
-    <th>Bruises</th>
-    <th>Gill Spacing</th>
-	<th>Gill Size</th>
-	<th>Ring Type</th>
-	<th>Mushroom Class</th>
-  </tr>
-{% for row in logs %}
-  <tr>
-    <td>{{row[0]}}</td>
-    <td>{{row[1]}}</td>
-    <td>{{row[2]}}</td>
-	<td>{{row[3]}}</td>
-	<td>{{row[4]}}</td>
-	<td>{{row[5]}}</td>
-  </tr>
-{% endfor %}
-</table>
-</div>
-<body>
+    <body>
+
 </html>
