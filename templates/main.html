@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<style>
+form {
+    margin: auto;
+    width: 40%;
+}
+.result {
+    margin: auto;
+    width: 40%;
+    border: 1px solid #ccc;
+}
+</style>
+<!-- <head>
+  <meta charset="UTF-8">
+  <title>Mushroom Classifier</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head> -->
+
+<body>
+<div>
+<form action="{{ url_for('predict') }}" method="POST">
+    <fieldset>
+        <legend>Input values:</legend>
+        <p>Please select Odor of Mushroom</p>
+		<input type="radio" name="Odor" value="a"> Almond
+		<input type="radio" name="Odor" value="l"> Anise
+		<input type="radio" name="Odor" value="c"> Creosote
+		<input type="radio" name="Odor" value="y"> Fishy
+		<input type="radio" name="Odor" value="f"> Foul
+		<input type="radio" name="Odor" value="m"> Musty
+		<input type="radio" name="Odor" value="n"> None
+		<input type="radio" name="Odor" value="p"> Pungent
+		<input type="radio" name="Odor" value="s"> Spicy<br>
+		
+		<p>Does Mushroom have bruises?</p>
+		<input type="radio" name="bruises" value="t"> Yes
+		<input type="radio" name="bruises" value="f"> No<br>
+		
+		<p>Gill Spacing Type</p>
+		<input type="radio" name="gill_spacing" value="c"> Close
+		<input type="radio" name="gill_spacing" value="w"> Crowded<br>
+		
+		<p>Gill Size</p>
+		<input type="radio" name="gill_size" value="b"> Broad
+		<input type="radio" name="gill_size" value="n"> Narrow<br>
+		
+        <p>Ring Type</p>
+		<input type="radio" name="ring_type" value="c"> Cobwebby
+		<input type="radio" name="ring_type" value="e"> Evanescent
+		<input type="radio" name="ring_type" value="f"> Flaring
+		<input type="radio" name="ring_type" value="l"> Large
+		<input type="radio" name="ring_type" value="n"> None
+		<input type="radio" name="ring_type" value="p"> Pendant
+		<input type="radio" name="ring_type" value="s"> Sheathing
+		<input type="radio" name="ring_type" value="z"> Zone<br>
+
+        <br>
+        <input type="submit">
+		<br>
+		<br>
+		{{ features }}
+    </fieldset>
+</form>
+</div>
+
+<br>
+<!-- <div class="result" align="center">
+    {% if result %}
+        {% for variable, value in original_input.items() %}
+            <b>{{ variable }}</b> : {{ value }}
+        {% endfor %}
+        <br>
+        <br> Mushroom Class is:
+           <p style="font-size:50px">{{ result }}</p>
+    {% endif %}
+</div> -->
+<body>
+</html>
