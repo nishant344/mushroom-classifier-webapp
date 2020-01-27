@@ -3,11 +3,11 @@
 <style>
 form {
     margin: auto;
-    width: 40%;
+    width: 50%;
 }
 .result {
     margin: auto;
-    width: 40%;
+    width: 50%;
     border: 1px solid #ccc;
 }
 </style>
@@ -64,21 +64,32 @@ form {
 		<p style="font-size:35px" align="center">{{ features }}</p>
 		<br>
 		<br>
-		<!-- <p style="font-size:35px" align="center">{{ log_data }}</p> -->
     </fieldset>
 </form>
 </div>
-
 <br>
-<!-- <div class="result" align="center">
-    {% if result %}
-        {% for variable, value in original_input.items() %}
-            <b>{{ variable }}</b> : {{ value }}
-        {% endfor %}
-        <br>
-        <br> 
-           <p style="font-size:50px">{{ result }}</p>
-    {% endif %}
-</div> -->
+<div id = "history" align="center">
+<legend align="center"> <h3> Classification History </h3> </legend>
+<table style="width:70%" border="1px">
+  <tr>
+    <th>Odor</th>
+    <th>Bruises</th>
+    <th>Gill Spacing</th>
+	<th>Gill Size</th>
+	<th>Ring Type</th>
+	<th>Mushroom Class</th>
+  </tr>
+{% for row in logs %}
+  <tr>
+    <td>{{row[0]}}</td>
+    <td>{{row[1]}}</td>
+    <td>{{row[2]}}</td>
+	<td>{{row[3]}}</td>
+	<td>{{row[4]}}</td>
+	<td>{{row[5]}}</td>
+  </tr>
+{% endfor %}
+</table>
+</div>
 <body>
 </html>

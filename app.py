@@ -11,7 +11,14 @@ model = joblib.load("model/mushroom_model.pkl")
 
 @app.route('/')
 def home():
-    return render_template('main.html')
+    top_features_include = ['odor', 'bruises', 'gill-spacing', 'gill-size', 'ring-type','mushroom_class']
+    df_pred=pd.DataFrame(columns=top_features_include)
+    if not os.path.isfile(r'history.csv'):
+        df_pred.to_csv (r'history.csv', index = None, header=True)
+    else: # else it will load dataframe from history.csv and append data with current predictions and save it to csv again.
+        df_pred=pd.read_csv(r'history.csv')
+    return render_template('main.html', logs=df_pred.values)
+    
 
 @app.route('/predict',methods=['POST'])
 def predict():
@@ -37,19 +44,14 @@ def predict():
             
             df_pred=pd.DataFrame(history_dict,index=[0])
             
-            # if file does not exist write header
-            if not os.path.isfile(r'history.csv'):
-               df_pred.to_csv (r'history.csv', index = None, header=True)
-            else: # else it will load dataframe from history.csv and append data with current predictions and save it to csv again.
-               df1=pd.read_csv(r'history.csv')
-               df_pred = pd.concat([df_pred, df1]).reset_index(drop = True)
-               df_pred.to_csv (r'history.csv', index = None, header=True)
+            df1=pd.read_csv(r'history.csv')
+            df_pred = pd.concat([df_pred, df1]).reset_index(drop = True)
+            df_pred.to_csv (r'history.csv', index = None, header=True)
 
-            return render_template('main.html', features=output)
+            return render_template('main.html', features=output, logs=df_pred.values)
 
         except:
             print("error encountered")
-#            return jsonify({'trace': traceback.format_exc()})
     else:
         print ('Train the model first')
         return ('No model here to use')
