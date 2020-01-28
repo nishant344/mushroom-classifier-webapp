@@ -28,7 +28,7 @@ Flask will run on port 12345.
 Select the features of mushroom based on user form provided and hit Submit.
 
 If everything goes well, you should  be able to see the predcited class of mushroom vaule on the HTML page!
-http://localhost:12345\predict
+http://localhost:12345/predict
 For each predcition, Classification History table is updated with latest predictions on top.
 
 If you want to get the log in a csv format, its generated in the project home directory as "history.csv".
