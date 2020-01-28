@@ -10,7 +10,7 @@ You must have Python3, Scikit Learn, Pandas (for Machine Learning Model) and Fla
 ### Project Structure
 This project has three major parts:
 1. Mushroom_Challenge.py - This contains code for our Machine Learning model to predict class of mushroom based on training data in 'mushrooms.csv' file. Only main features are used which were identified during feature selection and model evaluation. The base model with default features were having better classification and less overfitting as compared to other models. Hence, hyperparameter tuning was not needed.
-2. app.py - This contains Flask APIs that receive features of mushroom through frontend web app or API calls, computes the precited value based on our model and returns it back to frontend web app. In addition to it, features and predicted class is stored in "history.csv" as logs.
+2. app.py - This contains Flask APIs that receive features of mushroom through frontend web app or API calls, computes the predicted value based on our model and returns it back to frontend web app. In addition to it, features and predicted class is stored in "history.csv" as logs.
 4. templates - This folder contains the HTML template to allow user to enter features of mushroom and display the predicted class of mushroom - "Edible" or "Poisonous". Also, it displays historical data of each mushroom classification based on input features.
 
 ### Running the project
