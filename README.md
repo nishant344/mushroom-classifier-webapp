@@ -27,7 +27,7 @@ Flask will run on port 12345.
 
 Select the features of mushroom based on user form provided and hit Submit.
 
-If everything goes well, you should be able to see the predcited class of mushroom on the HTML page!
+If everything goes well, you should be able to see the predicted class of mushroom on the HTML page!
 http://localhost:12345/predict
 For each prediction, Classification History table is updated with latest predictions on top.
 
